@@ -1,21 +1,35 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 15.05.20
-  Time: 22:36
-  To change this template use File | Settings | File Templates.
---%>
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title><spring:message code="lable.Cars"/></title>
+    <title>Cars</title>
 </head>
 <body>
-    <c:forEach var="msq" items="${message}">
-        <h1>${msq.toString()}</h1>
+
+<h2>Cars</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <th>model</th>
+        <th>color</th>
+        <th>type</th>
+    </tr>
+    <c:forEach var="cars" items="${allCar}">
+        <tr>
+            <td>${cars.id}</td>
+            <td>${cars.model}</td>
+            <td>${cars.color}</td>
+            <td>${cars.tipe}</td>
+            <td>
+                <a href="/update/${cars.id}">edit</a>
+                <a href="/delete/${cars.id}">delete</a>
+            </td>
+        </tr>
     </c:forEach>
+</table>
+
+<h2>Add</h2>
+<c:url value="/add" var="add"/>
+<a href="${add}">Add new car</a>
 </body>
 </html>
