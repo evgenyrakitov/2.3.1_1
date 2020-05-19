@@ -1,6 +1,6 @@
 package crud.config;
 
-import crud.model.Car;
+import crud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -45,7 +45,7 @@ public class AppConfig {
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 
         factoryBean.setHibernateProperties(properties);
-        factoryBean.setAnnotatedClasses(Car.class);
+        factoryBean.setAnnotatedClasses(User.class);
         return factoryBean;
     }
 

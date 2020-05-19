@@ -1,28 +1,25 @@
 package crud.controller;
 
 
-import crud.model.Car;
-import crud.service.CarService;
+import crud.model.User;
+import crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.concurrent.Callable;
-
 @Controller
 @RequestMapping("/")
-public class CarController {
+public class UserController {
 
     @Autowired
-    CarService carService;
+    UserService UserService;
 
-    @GetMapping(value = "cars")
-    public String printCar(ModelMap modelMap) {
-        modelMap.addAttribute("allCar", carService.getAllCar());
-        return "cars";
+    @GetMapping(value = "users")
+    public String printUser(ModelMap modelMap) {
+        modelMap.addAttribute("allUser", UserService.getAllUser());
+        return "users";
     }
 
     @GetMapping(value = "add")
@@ -32,31 +29,30 @@ public class CarController {
     }
 
     @PostMapping(value = "add")
-    public String addCar(@ModelAttribute("car") Car car) {
-        carService.addCar(car);
-        return "redirect:/cars";
+    public String addUser(@ModelAttribute("User") User user) {
+        UserService.addUser(user);
+        return "redirect:/users";
     }
 
     @GetMapping(value = "delete/{id}")
-    public String deleteCar(@PathVariable Long id) {
-        carService.removeCar(id);
-        return "redirect:/cars";
+    public String deleteUser(@PathVariable Long id) {
+        UserService.removeUser(id);
+        return "redirect:/users";
     }
 
     @GetMapping(value = "update/{id}")
     public ModelAndView editPage (@PathVariable Long id) {
-        Car car = carService.getCarById(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("update");
-        modelAndView.addObject("car", car);
+        modelAndView.addObject("user", UserService.getUserById(id));
         return modelAndView;
     }
 
     @PostMapping(value = "update")
-    public ModelAndView updateCar (@ModelAttribute Car car, @RequestParam Long id) {
+    public ModelAndView updateUser (@ModelAttribute User user, @RequestParam Long id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/cars");
-        carService.updateCar(car);
+        modelAndView.setViewName("redirect:/users");
+        UserService.updateUser(user);
         return modelAndView;
     }
 
