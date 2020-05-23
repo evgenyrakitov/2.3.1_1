@@ -22,8 +22,8 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        sessionFactory.getCurrentSession().createQuery("update User user set user.name=:thisName, user.lastName=:thisLastName, user.email=:thisEmail, user.password=:thisPassword where user.id=:thisId")
-                .setParameter("thisName", user.getName())
+        sessionFactory.getCurrentSession().createQuery("update User user set user.userName=:thisUserName, user.lastName=:thisLastName, user.email=:thisEmail, user.password=:thisPassword where user.id=:thisId")
+                .setParameter("thisUserName", user.getUsername())
                 .setParameter("thisLastName", user.getLastName())
                 .setParameter("thisEmail", user.getEmail())
                 .setParameter("thisPassword", user.getPassword())
@@ -39,10 +39,10 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public User getUserById(Long id) {
-        User User = sessionFactory.getCurrentSession().createQuery("select user from User user where user.id=:thisId", User.class)
+        User user = sessionFactory.getCurrentSession().createQuery("select user from User user where user.id=:thisId", User.class)
                 .setParameter("thisId", id)
                 .uniqueResult();
-        return User;
+        return user;
     }
 
     @Override
@@ -50,5 +50,13 @@ public class UserDaoImp implements UserDao {
         sessionFactory.getCurrentSession().createQuery("delete User user where user.id=:thisId")
                 .setParameter("thisId", id)
                 .executeUpdate();
+    }
+
+    @Override
+    public User findUserByUserName(String userName) {
+        User user = sessionFactory.getCurrentSession().createQuery("select user from User user where user.userName=:thisUserName", User.class)
+                .setParameter("thisUserName", userName)
+                .uniqueResult();
+        return user;
     }
 }

@@ -10,7 +10,7 @@
 <table>
     <tr>
         <th>id</th>
-        <th>name</th>
+        <th>userName</th>
         <th>lastName</th>
         <th>email</th>
         <th>password</th>
@@ -18,20 +18,21 @@
     <c:forEach var="users" items="${allUser}">
         <tr>
             <td>${users.id}</td>
-            <td>${users.name}</td>
+            <td>${users.username}</td>
             <td>${users.lastName}</td>
             <td>${users.email}</td>
             <td>${users.password}</td>
             <td>
-                <a href="/update/${users.id}">edit</a>
-                <a href="/delete/${users.id}">delete</a>
+                <a href="admin/update/${users.id}">edit</a>
+                <a href="admin/delete/${users.id}">delete</a>
             </td>
         </tr>
     </c:forEach>
 </table>
 
 <h2>Add</h2>
-<c:url value="/add" var="add"/>
+<c:url value="/admin/add" var="add"/>
 <a href="${add}">Add new User</a>
+<h4><a href="/logout">Logout</a></h4>
 </body>
 </html>

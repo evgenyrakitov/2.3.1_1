@@ -1,15 +1,23 @@
 package crud.service;
 
 
-
 import crud.dao.UserDao;
+import crud.model.Role;
 import crud.model.User;
-import crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -17,10 +25,17 @@ public class UserServiceImp implements UserService {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    PasswordEncoder noOpPasswordEncoder;
+
     @Transactional
     @Override
     public void addUser(User user) {
+        User user1 = userDao.findUserByUserName(user.getUsername());
+        user.setRole(Collections.singleton(new Role(1L, "ROLE_USER")));
+        user.setPassword(noOpPasswordEncoder.encode(user.getPassword()));
         userDao.addUser(user);
+
     }
 
     @Transactional
@@ -44,5 +59,12 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void removeUser(Long id) { userDao.removeUser(id);}
+
+    @Transactional
+    @Override
+    public User findUserByUserName(String userName) {
+        return userDao.findUserByUserName(userName);
+    }
+
 }
 

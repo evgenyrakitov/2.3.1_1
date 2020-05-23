@@ -11,17 +11,17 @@
 </head>
 <body>
 <c:if test="${empty user.id}">
-    <c:url value="/add" var="var"/>
+    <c:url value="/admin/add" var="var"/>
 </c:if>
 <c:if test="${!empty user.id}">
-    <c:url value="/update" var="var"/>
+    <c:url value="/admin/update" var="var"/>
 </c:if>
 <form action="${var}" method="POST">
     <c:if test="${!empty user.id}">
         <input type="hidden" name="id" value="${user.id}">
     </c:if>
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name">
+    <label for="userName">UserName</label>
+    <input type="text" name="userName" id="userName">
     <label for="lastName">LastName</label>
     <input type="text" name="lastName" id="lastName">
     <label for="email">Email</label>
