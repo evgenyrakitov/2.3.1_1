@@ -1,11 +1,13 @@
 package crud.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "t_role")
+@Entity(name="roles")
 public class Role implements GrantedAuthority {
 
     @Id
@@ -54,4 +56,10 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return getName();
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
 }

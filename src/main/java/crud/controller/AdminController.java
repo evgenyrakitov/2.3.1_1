@@ -2,52 +2,60 @@ package crud.controller;
 
 
 import crud.model.User;
+import crud.service.RoleService;
 import crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
     UserService UserService;
 
-    @GetMapping(value = "admin")
+    @Autowired
+    RoleService roleService;
+
+    @GetMapping
     public String printUser(ModelMap modelMap) {
         modelMap.addAttribute("allUser", UserService.getAllUser());
         return "admin";
     }
 
-    @GetMapping(value = "admin/add")
+    @GetMapping(value = "/add")
     public String createAddPage(ModelMap modelMap) {
-        return "redirect:/admin/update/0";
+        modelMap.addAttribute("roles", roleService.getRoles());
+        return "add";
     }
 
-    @PostMapping(value = "admin/add")
-    public String addUser(@ModelAttribute("User") User user) {
-        UserService.addUser(user);
+    @PostMapping(value = "/add")
+    public String addUser(@RequestParam String userName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password, @RequestParam String[] role) {
+        User user = new User(userName, lastName, email, password);
+        UserService.addUser(user, role);
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "admin/delete/{id}")
+    @GetMapping(value = "/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
         UserService.removeUser(id);
-        return "admin";
+        return "redirect:/admin";
     }
 
-    @GetMapping(value = "admin/update/{id}")
+    @GetMapping(value = "/update/{id}")
     public String editPage (@PathVariable Long id, ModelMap modelMap) {
         modelMap.addAttribute("user", UserService.getUserById(id));
+        modelMap.addAttribute("roles", roleService.getRoles());
         return "update";
     }
 
-    @PostMapping(value = "admin/update")
-    public String updateUser (@ModelAttribute User user, @RequestParam Long id) {
-        UserService.updateUser(user);
+    @PostMapping(value = "/update")
+    public String updateUser (Long id, String userName, String lastName, String email, String password, String[] role) {
+        User user = new User(id, userName, lastName, email, password);
+        UserService.updateUser(user, role);
         return "redirect:/admin";
     }
 

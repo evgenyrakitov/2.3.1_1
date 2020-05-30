@@ -22,13 +22,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        sessionFactory.getCurrentSession().createQuery("update User user set user.userName=:thisUserName, user.lastName=:thisLastName, user.email=:thisEmail, user.password=:thisPassword where user.id=:thisId")
-                .setParameter("thisUserName", user.getUsername())
-                .setParameter("thisLastName", user.getLastName())
-                .setParameter("thisEmail", user.getEmail())
-                .setParameter("thisPassword", user.getPassword())
-                .setParameter("thisId", user.getId())
-                .executeUpdate();
+        sessionFactory.getCurrentSession().update(user);
     }
 
     @Override

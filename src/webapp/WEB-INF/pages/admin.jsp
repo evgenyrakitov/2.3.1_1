@@ -14,6 +14,7 @@
         <th>lastName</th>
         <th>email</th>
         <th>password</th>
+        <th>role</th>
     </tr>
     <c:forEach var="users" items="${allUser}">
         <tr>
@@ -22,6 +23,10 @@
             <td>${users.lastName}</td>
             <td>${users.email}</td>
             <td>${users.password}</td>
+            <td><c:forEach var="role" items="${users.role}">
+                    <option value="<c:out value="${role}"/>"><c:out value="${role}"/></option>
+                </c:forEach>
+            </td>
             <td>
                 <a href="admin/update/${users.id}">edit</a>
                 <a href="admin/delete/${users.id}">delete</a>
