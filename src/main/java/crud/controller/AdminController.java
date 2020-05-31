@@ -1,9 +1,11 @@
 package crud.controller;
 
 
+import crud.dto.UserDTO;
 import crud.model.User;
 import crud.service.RoleService;
 import crud.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,8 +35,9 @@ public class AdminController {
     }
 
     @PostMapping(value = "/add")
-    public String addUser(@RequestParam String userName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password, @RequestParam String[] role) {
-        User user = new User(userName, lastName, email, password);
+    public String addUser(UserDTO userDTO, @RequestParam String[] role) {
+        User user = new User();
+        BeanUtils.copyProperties(userDTO, user);
         UserService.addUser(user, role);
         return "redirect:/admin";
     }
@@ -53,8 +56,9 @@ public class AdminController {
     }
 
     @PostMapping(value = "/update")
-    public String updateUser (Long id, String userName, String lastName, String email, String password, String[] role) {
-        User user = new User(id, userName, lastName, email, password);
+    public String updateUser (UserDTO userDTO, String[] role) {
+        User user = new User();
+        BeanUtils.copyProperties(userDTO, user);
         UserService.updateUser(user, role);
         return "redirect:/admin";
     }
