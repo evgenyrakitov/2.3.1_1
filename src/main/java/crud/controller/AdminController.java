@@ -2,6 +2,7 @@ package crud.controller;
 
 
 import crud.dto.UserDTO;
+import crud.model.Role;
 import crud.model.User;
 import crud.service.RoleService;
 import crud.service.UserService;
@@ -12,6 +13,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -21,6 +24,11 @@ public class AdminController {
 
     @Autowired
     RoleService roleService;
+
+    @ModelAttribute("role")
+    public List<Role> initializeRole() {
+        return  roleService.getRoles();
+    }
 
     @GetMapping
     public String printUser(ModelMap modelMap) {
@@ -35,9 +43,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/add")
-    public String addUser(UserDTO userDTO, @RequestParam String[] role) {
-        User user = new User();
-        BeanUtils.copyProperties(userDTO, user);
+    public String addUser(User user, String[] role) {
         UserService.addUser(user, role);
         return "redirect:/admin";
     }
@@ -56,9 +62,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/update")
-    public String updateUser (UserDTO userDTO, String[] role) {
-        User user = new User();
-        BeanUtils.copyProperties(userDTO, user);
+    public String updateUser (User user, String[] role) {
         UserService.updateUser(user, role);
         return "redirect:/admin";
     }

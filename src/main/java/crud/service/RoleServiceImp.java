@@ -16,10 +16,11 @@ public class RoleServiceImp implements RoleService{
 
     @Transactional
     @Override
-    public List<String> getRoles() {
+    public List<Role> getRoles() {
         return roleDao.getRole();
     }
 
+    @Transactional
     @Override
     public Role getRoleByName(String roleName) {
         return roleDao.getRoleByName(roleName);

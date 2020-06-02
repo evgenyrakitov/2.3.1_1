@@ -5,6 +5,6 @@ import crud.model.Role;
 import java.util.List;
 
 public interface RoleService {
-    List<String> getRoles();
+    List<Role> getRoles();
     Role getRoleByName(String roleName);
 }

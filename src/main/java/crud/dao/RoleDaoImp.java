@@ -15,8 +15,8 @@ public class RoleDaoImp implements RoleDao{
     SessionFactory sessionFactory;
 
     @Override
-    public List<String> getRole() {
-        TypedQuery<String> query = sessionFactory.getCurrentSession().createQuery("select role.name from roles role");
+    public List<Role> getRole() {
+        TypedQuery<Role> query = sessionFactory.getCurrentSession().createQuery("select role.name from roles role");
         return query.getResultList();
     }
 

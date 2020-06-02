@@ -6,7 +6,7 @@
 </head>
 <body>
     <c:url value="/admin/update" var="var"/>
-<form action="${var}" method="POST">
+<form action="${var}" method="POST" name = "user">
     <%--@declare id="id"--%><label for="id">Id</label>
     <input type="text" name="id" value="${user.id}" readonly>
     <label for="userName">UserName</label>
